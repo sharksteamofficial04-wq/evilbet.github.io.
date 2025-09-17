@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPORT - EVILBET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'Bebas Neue Cyrillic';
+            src: local('Bebas Neue Cyrillic'), local('BebasNeueCyrillic'),
+                 url('https://fonts.gstatic.com/s/bebasneue/v9/JTUSjIg69CK48gW7PXoo9Wlhyw.woff2') format('woff2');
+            unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c, #1a1a1a);
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            color: #ffffff;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 15px;
+            background: rgba(37, 37, 37, 0.8);
+            position: fixed;
+            width: calc(100% - 40px);
+            top: 0;
+            z-index: 100;
+            height: 50px;
+            border-bottom: 1px solid #333;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #logo.header-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff3333;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            padding: 5px 12px;
+        }
+
+        .balance-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .balance-label {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 2px;
+        }
+
+        .balance-value {
+            font-size: 1.1rem;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .user-name {
+            font-size: 1rem;
+            color: #fff;
+            padding: 4px 10px;
+            background: rgba(255, 51, 51, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .notifications {
+            position: relative;
+        }
+
+        .notifications-btn {
+            background: #ff3333;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .notifications-btn:hover {
+            background: #ff5555;
+            transform: scale(1.05);
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #4caf50;
+            color: #fff;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-btn {
+            background: #ff3333;
+            padding: 4px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        /* Основной контент */
+        .main-container {
+            max-width: 100%;
+            margin: 70px auto 20px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            grid-column: 1 / -1;
+        }
+
+        /* Виды спорта */
+        .sports-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            grid-column: 1 / -1;
+        }
+
+        .sport-item {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .sport-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
+        }
+
+        .sport-item.active {
+            border-color: #ff3333;
+            background: rgba(50, 30, 30, 0.9);
+        }
+
+        .sport-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .sport-name {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        /* Контент с матчами */
+        .matches-section {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            grid-column: 1 / 2;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #ff3333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .date-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .date-title {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .date-arrows {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-arrow {
+            background: #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .date-arrow:hover {
+            background: #ff3333;
+        }
+
+        /* Стили для матчей */
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .match-card {
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.2);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .match-time {
+            font-size: 1.2rem;
+            color: #ff3333;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .match-league {
+            font-size: 1rem;
+            color: #aaa;
+        }
+
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 45%;
+        }
+
+        .team-home {
+            align-items: flex-start;
+        }
+
+        .team-away {
+            align-items: flex-end;
+        }
+
+        .team-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid #444;
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .match-vs {
+            font-size: 1.2rem;
+            color: #aaa;
+            width: 10%;
+            text-align: center;
+        }
+
+        .match-odds {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .odds-item {
+            background: #333;
+            padding: 15px 10px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .odds-item:hover {
+            background: #ff3333;
+            transform: scale(1.05);
+        }
+
+        .odds-item.selected {
+            background: #ff3333;
+            box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+        }
+
+        .odds-type {
+            font-size: 1rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .odds-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        /* Купон ставок */
+        .bet-coupon {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            position: sticky;
+            top: 80px;
+            width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 90;
+        }
+
+        .coupon-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .coupon-tab {
+            flex: 1;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            margin-right: 5px;
+        }
+
+        .coupon-tab:last-child {
+            margin-right: 0;
+        }
+
+        .coupon-tab.active {
+            background: #ff3333;
+        }
+
+        .coupon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .coupon-title {
+            font-size: 1.5rem;
+            color: #ff3333;
+        }
+
+        .clear-coupon {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            font-size: 1rem;
+        }
+
+        .clear-coupon:hover {
+            background: #ff3333;
+        }
+
+        .coupon-items, .coupon-history {
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .coupon-history::-webkit-scrollbar, .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .coupon-history::-webkit-scrollbar-track, .modal-body::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 4px;
+        }
+
+        .coupon-history::-webkit-scrollbar-thumb, .modal-body::-webkit-scrollbar-thumb {
+            background: #ff3333;
+            border-radius: 4px;
+        }
+
+        .coupon-history::-webkit-scrollbar-thumb:hover, .modal-body::-webkit-scrollbar-thumb:hover {
+            background: #ff5555;
+        }
+
+        .coupon-item {
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .coupon-event {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .coupon-bet {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .coupon-odds {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .odds-number {
+            font-size: 1.1rem;
+            color: #ff3333;
+        }
+
+        .remove-bet {
+            color: #ff3333;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .coupon-total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total-label {
+            font-size: 1.1rem;
+            color: #aaa;
+        }
+
+        .total-value {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .stake-input {
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 10px;
+            color: #fff;
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .place-bet-btn {
+            background: #ff3333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .place-bet-btn:hover {
+            background: #ff5555;
+        }
+
+        .place-bet-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        /* Кнопка поддержки */
+        .support-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #ff3333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 90;
+            transition: all 0.3s;
+        }
+
+        .support-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Уведомления */
+        #global-notification {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #4caf50;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            max-width: 300px;
+        }
+
+        /* Модалки */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            display: none;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 1.8rem;
+            color: #ff3333;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .modal-close:hover {
+            background: #ff3333;
+        }
+
+        .modal-button {
+            background: #ff3333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Bebas Neue', 'Bebas Neue Cyrillic', sans-serif;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .modal-button:hover {
+            background: #ff5555;
+        }
+
+        .history-item {
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .history-date {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .history-event {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .history-details {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .bet-coupon {
+                position: relative;
+                top: 0;
+                margin-top: 20px;
+                width: 100%;
+                max-width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .matches-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .header-right {
+                gap: 10px;
+            }
+            
+            .user-info {
+                gap: 10px;
+                padding: 5px 8px;
+            }
+            
+            .balance-label {
+                font-size: 0.7rem;
+            }
+            
+            .balance-value {
+                font-size: 1rem;
+            }
+            
+            .user-name {
+                font-size: 0.9rem;
+                padding: 3px 8px;
+            }
+            
+            nav ul {
+                gap: 10px;
+            }
+            
+            nav ul li a {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .header-left, .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .main-container {
+                margin-top: 120px;
+            }
+            
+            .sports-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .matches-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-name {
+                font-size: 1.1rem;
+            }
+            
+            .odds-value {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+            
+            .sport-item {
+                padding: 15px 10px;
+            }
+            
+            .sport-name {
+                font-size: 1.2rem;
+            }
+            
+            .match-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .match-teams {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .team {
+                width: 100%;
+                align-items: center !important;
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .team-home {
+                justify-content: flex-start;
+            }
+            
+            .team-away {
+                justify-content: flex-end;
+            }
+            
+            .match-vs {
+                width: 100%;
+                order: -1;
+            }
+            
+            .support-button {
+                bottom: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .header-right {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img id="logo" src="/IMG/LOGO.svg" alt="EVILBET Logo" class="header-logo" onerror="this.src='https://via.placeholder.com/80?text=LOGO'">
+            <nav>
+                <ul>
+                    <li><a href="index.html">PLAY</a></li>
+                    <li><a href="sport.html">SPORT</a></li>
+                    <li><a href="referal.html">REFERAL</a></li>
+                    <li><a href="index.html">LIVE</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <div class="user-info">
+                <div class="balance-item">
+                    <div class="balance-label">БАЛАНС</div>
+                    <div class="balance-value" id="balanceDisplay">0.00$</div>
+                </div>
+                <div class="user-name" id="userName" onclick="openProfile()">ИГРОК_123</div>
+            </div>
+            
+            <div class="notifications">
+                <button class="notifications-btn">
+                    <i class="fas fa-bell"></i>
+                </button>
+                <div class="notification-count">0</div>
+            </div>
+            
+            <a href="https://t.me/MyEvilBetBot" class="contact-btn" id="connectTgBtn">CONNECT TG</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <h1 class="page-title">СПОРТ</h1>
+        
+        <!-- Виды спорта -->
+        <div class="sports-container">
+            <div class="sport-item active">
+                <div class="sport-icon">⚽</div>
+                <div class="sport-name">ФУТБОЛ</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🏀</div>
+                <div class="sport-name">БАСКЕТБОЛ</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🎾</div>
+                <div class="sport-name">ТЕННИС</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🏒</div>
+                <div class="sport-name">ХОККЕЙ</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🥊</div>
+                <div class="sport-name">БОКС</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🏎️</div>
+                <div class="sport-name">АВТОГОНКИ</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🎯</div>
+                <div class="sport-name">КИБЕРСПОРТ</div>
+            </div>
+            <div class="sport-item">
+                <div class="sport-icon">🏈</div>
+                <div class="sport-name">АМЕРИКАНСКИЙ ФУТБОЛ</div>
+            </div>
+        </div>
+        
+        <!-- Матчи -->
+        <div class="matches-section">
+            <h2 class="section-title">ФУТБОЛЬНЫЕ МАТЧИ</h2>
+            
+            <div class="date-navigation">
+                <div class="date-title">СЕГОДНЯ, 13 СЕНТЯБРЯ</div>
+                <div class="date-arrows">
+                    <div class="date-arrow">←</div>
+                    <div class="date-arrow">→</div>
+                </div>
+            </div>
+            
+            <div class="matches-grid">
+                <!-- Матч 1 -->
+                <div class="match-card" data-match-id="1">
+                    <div class="match-header">
+                        <div class="match-time">18:45</div>
+                        <div class="match-league">Premier League</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-home">
+                            <div class="team-logo">M</div>
+                            <div class="team-name">Манчестер Юнайтед</div>
+                        </div>
+                        <div class="match-vs">VS</div>
+                        <div class="team team-away">
+                            <div class="team-logo">L</div>
+                            <div class="team-name">Ливерпуль</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <div class="odds-item" data-event="Манчестер Юнайтед - Ливерпуль" data-bet="П1" data-odds="2.45" data-match-id="1">
+                            <div class="odds-type">П1</div>
+                            <div class="odds-value">2.45</div>
+                        </div>
+                        <div class="odds-item" data-event="Манчестер Юнайтед - Ливерпуль" data-bet="X" data-odds="3.20" data-match-id="1">
+                            <div class="odds-type">X</div>
+                            <div class="odds-value">3.20</div>
+                        </div>
+                        <div class="odds-item" data-event="Манчестер Юнайтед - Ливерпуль" data-bet="П2" data-odds="2.80" data-match-id="1">
+                            <div class="odds-type">П2</div>
+                            <div class="odds-value">2.80</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Матч 2 -->
+                <div class="match-card" data-match-id="2">
+                    <div class="match-header">
+                        <div class="match-time">19:00</div>
+                        <div class="match-league">La Liga</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-home">
+                            <div class="team-logo">R</div>
+                            <div class="team-name">Реал Мадрид</div>
+                        </div>
+                        <div class="match-vs">VS</div>
+                        <div class="team team-away">
+                            <div class="team-logo">B</div>
+                            <div class="team-name">Барселона</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <div class="odds-item" data-event="Реал Мадрид - Барселона" data-bet="П1" data-odds="1.95" data-match-id="2">
+                            <div class="odds-type">П1</div>
+                            <div class="odds-value">1.95</div>
+                        </div>
+                        <div class="odds-item" data-event="Реал Мадрид - Барселона" data-bet="X" data-odds="3.50" data-match-id="2">
+                            <div class="odds-type">X</div>
+                            <div class="odds-value">3.50</div>
+                        </div>
+                        <div class="odds-item" data-event="Реал Мадрид - Барселона" data-bet="П2" data-odds="3.80" data-match-id="2">
+                            <div class="odds-type">П2</div>
+                            <div class="odds-value">3.80</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Матч 3 -->
+                <div class="match-card" data-match-id="3">
+                    <div class="match-header">
+                        <div class="match-time">20:30</div>
+                        <div class="match-league">Bundesliga</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-home">
+                            <div class="team-logo">B</div>
+                            <div class="team-name">Бавария</div>
+                        </div>
+                        <div class="match-vs">VS</div>
+                        <div class="team team-away">
+                            <div class="team-logo">D</div>
+                            <div class="team-name">Боруссия Дортмунд</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <div class="odds-item" data-event="Бавария - Боруссия Дортмунд" data-bet="П1" data-odds="1.75" data-match-id="3">
+                            <div class="odds-type">П1</div>
+                            <div class="odds-value">1.75</div>
+                        </div>
+                        <div class="odds-item" data-event="Бавария - Боруссия Дортмунд" data-bet="X" data-odds="3.80" data-match-id="3">
+                            <div class="odds-type">X</div>
+                            <div class="odds-value">3.80</div>
+                        </div>
+                        <div class="odds-item" data-event="Бавария - Боруссия Дортмунд" data-bet="П2" data-odds="4.20" data-match-id="3">
+                            <div class="odds-type">П2</div>
+                            <div class="odds-value">4.20</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Купон ставок -->
+        <div class="bet-coupon">
+            <div class="coupon-tabs">
+                <button class="coupon-tab active" data-tab="bets">Ставки</button>
+                <button class="coupon-tab" data-tab="history">История</button>
+            </div>
+            <div class="coupon-header">
+                <div class="coupon-title">КУПОН</div>
+                <button class="clear-coupon">Очистить</button>
+            </div>
+            <div class="coupon-items" id="couponItems">
+                <div class="coupon-empty">Выберите события для ставки</div>
+            </div>
+            <div class="coupon-history" id="couponHistory" style="display: none;">
+                <div class="coupon-empty">Нет ставок</div>
+            </div>
+            <div class="coupon-total">
+                <div class="total-row">
+                    <div class="total-label">Сумма ставки:</div>
+                    <input type="number" class="stake-input" id="stakeInput" placeholder="0.00" min="1">
+                </div>
+                <div class="total-row">
+                    <div class="total-label">Коэффициент:</div>
+                    <div class="total-value" id="totalOdds">1.00</div>
+                </div>
+                <div class="total-row">
+                    <div class="total-label">Выигрыш:</div>
+                    <div class="total-value" id="potentialWin">0.00</div>
+                </div>
+                <button class="place-bet-btn" id="placeBetBtn" disabled>СДЕЛАТЬ СТАВКУ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка поддержки -->
+    <div class="support-button">
+        <i class="fas fa-headset"></i>
+    </div>
+
+    <!-- Модалка профиля -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Профиль</h2>
+            <div class="modal-body">
+                <p>Имя: <span id="profileName">ИГРОК_123</span></p>
+                <p>Баланс: <span id="profileBalance">0.00$</span></p>
+            </div>
+            <button class="modal-button" onclick="openHistory()">История ставок</button>
+            <button class="modal-close" onclick="closeProfile()">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Модалка истории ставок -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">История ставок</h2>
+            <div id="betHistoryList" class="modal-body"></div>
+            <button class="modal-close" onclick="closeHistory()">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="coupon-manager.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация купона
+            initCoupon();
+            updateBalance();
+            highlightSelectedOdds();
+
+            // Обработчик клика по коэффициентам
+            document.querySelectorAll('.odds-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const event = this.getAttribute('data-event');
+                    const bet = this.getAttribute('data-bet');
+                    const odds = this.getAttribute('data-odds');
+                    const matchId = this.getAttribute('data-match-id');
+                    const added = addToCoupon(event, bet, odds, matchId);
+                    if (added) {
+                        this.classList.add('selected');
+                        document.querySelector('.bet-coupon').classList.add('visible');
+                        showNotification(`Добавлено в купон: ${event} - ${bet} (${odds})`);
+                    } else {
+                        removeFromCouponByEvent(event, bet, matchId);
+                        this.classList.remove('selected');
+                        if (!isCouponNotEmpty()) {
+                            document.querySelector('.bet-coupon').classList.remove('visible');
+                        }
+                    }
+                });
+            });
+
+            // Обработчик вкладок купона
+            document.querySelectorAll('.coupon-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.coupon-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById('couponItems').style.display = tabId === 'bets' ? 'block' : 'none';
+                    document.getElementById('couponHistory').style.display = tabId === 'history' ? 'block' : 'none';
+                    document.querySelector('.coupon-total').style.display = tabId === 'bets' ? 'block' : 'none';
+                    document.querySelector('.coupon-header').style.display = tabId === 'bets' ? 'flex' : 'none';
+                    if (tabId === 'history') {
+                        updateCouponHistory();
+                    }
+                });
+            });
+
+            // Обработчик выбора вида спорта
+            document.querySelectorAll('.sport-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.sport-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    const sportName = this.querySelector('.sport-name').textContent;
+                    document.querySelector('.section-title').textContent = `${sportName} МАТЧИ`;
+                });
+            });
+
+            // Обработчик навигации по датам
+            document.querySelectorAll('.date-arrow').forEach(arrow => {
+                arrow.addEventListener('click', function() {
+                    const currentTitle = document.querySelector('.date-title').textContent;
+                    console.log('Переключение даты:', currentTitle);
+                });
+            });
+
+            // Обработчик уведомлений
+            document.querySelector('.notifications-btn').addEventListener('click', () => {
+                showNotification('Уведомления пока не реализованы');
+                document.querySelector('.notification-count').textContent = '0';
+            });
+        });
+
+        // Модалка профиля
+        function openProfile() {
+            document.getElementById('profileModal').classList.add('show');
+            updateBetHistory();
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('show');
+        }
+
+        // Модалка истории ставок
+        function openHistory() {
+            document.getElementById('profileModal').classList.remove('show');
+            document.getElementById('historyModal').classList.add('show');
+            updateBetHistory();
+        }
+
+        function closeHistory() {
+            document.getElementById('historyModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
